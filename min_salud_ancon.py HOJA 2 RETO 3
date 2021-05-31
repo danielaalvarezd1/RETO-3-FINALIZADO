@@ -1,0 +1,84 @@
+from datetime import datetime
+import random
+
+def cdia_humasciiano():
+  """ 
+  Returns
+  -------
+  humasciiano:str
+  Lista de Humasciianos aleatoriamente     
+  """
+  cdia=["aer*+aq@ta","aqp*xap@ka","adv*qa+@ga","avo*uaq@ca","aex*qay@va","asw*oap@ja","aru*uap@da","auy*vay@ca","aco*uan@ha","anm*+at@ta","atp*+an@wa","apy*+an@ya","a@l*+ax@ba","a@o*+ay@ua","a@w*tax@ka","a@p*naq@aa","a@q*nau@ka","a@v*xaq@ra","aft*yaoqia","ayt*xausja","abp*qavqpa","adw*&a@oha","alwrqarxfa","aunnxatola","aumro@t@sa","a*upp@w@ca","a*o*q@w@ka","a*o*p@r@oa","a*m*q@y@aa","aau*t@n@xa","afv*xav@na","aw@*+asoca","af@*+aotja","aq@*+auvda","ar@*+axvca","am@*+aosta","ap@*+apyaa","af@*+aqpsa","aq@*+apnea","a@w*+aq@ea","a@s*+at@ba","c@v*+ax@ba","a@o*+ax@sa","c@r*+as@ma","c@n*+aw@ia","crw*+aoxma","ciy*+atsqp","col*aatusu","csv*aapsxv","ctv*aaruxf","cavkaavqdi","apyka@y@pr","apswa@w@ux","auxxu@p@ha","ajokj@r@ja","agrwg@t@wa","apqmp@y@ga","agqogan@ga","ao@*oauypa","ak@*kaqrfa","ae@*eauoma","at@*tayvfa","ab@*bawwea"]
+  indice = random.randint(0, 62)
+  return cdia[indice]
+
+def lista_profesion():
+  profesion=["SALUD_1","SALUD_2","BASICA","SECUNDARIA","NINGUNO"]
+  if "@" in cdia_humasciiano():
+    indice = random.randint(0, 1)
+  elif "+" in cdia_humasciiano():
+    indice = random.randint(2, 3)
+  else:
+    indice = random.randint(3, 4)
+  
+  print(f"CDIA:      {cdia_humasciiano()}")
+  print(f"PROFESION: {profesion[indice]}")
+  return
+
+
+
+def proc_control(cd1):
+  v1 = len(cd1)==10 and cd1.count("A")==3
+  v2 = type(cd1)==type("str") and cd1[0]=="A" and cd1 [-1]=="A"
+  v3 = "+" in cd1 or "=" in cd1 or "&" in cd1
+  v4 = cd1[3]=="*" and "@" in cd1
+ 
+  if v1==True and v2==True and v3==True and v4==True:
+    validador=True
+  else:
+    validador=False
+
+  return validador
+
+
+def formulario():
+  pregunta_1=input("Usted ha regresado del exterior en las 2 últimas semanas SI/NO:")
+  pregunta_1may=pregunta_1.upper()
+  if pregunta_1may=="SI" or pregunta_1may=="S":
+    print("================CONTESTE EL FORMULARIO============")
+    pregunta_2=input("Pais de origen: ")
+    Pregunta_3 =input("Ha tenido contacto a < 2 metros con un Humita positivo SI/NO: ")
+    pregunta_4=input("Ha presentado fiebre hace < 2 semanas SI/NO: ")
+    pregunta_5=input("Ha presentado tos hace < 2 semanas SI/NO: ")
+    pregunta_6=input("Ha presentado falta del olfato hace < 2 semanas SI/NO: ")
+    pregunta_7=input("Fecha de nacimiento (dd/mm/aaaa): ")
+    validador_formulario(pregunta_2,Pregunta_3,pregunta_7,pregunta_4,pregunta_5,pregunta_6)
+  else:
+    print("Apreciado usuario HUMASCIIANOS, le informamos que usted esta libre de PYAN_V19")
+  return
+
+def calcular_edad(c_edad):
+  fecha = datetime.strptime(c_edad, "%d/%m/%Y") # Tipo: datetime.datetime
+  hoy = datetime.now()      # Tipo: datetime.datetime
+  diferencia = hoy - fecha  # Tipo resultante: datetime.timedelta
+  ainos=diferencia.days / 365
+  #print(f"Años: {ainos:.0f} ")
+  return ainos
+
+def validador_formulario(country,cont,fecha,fieb,ts,ol):
+  edad=int(f"{calcular_edad(fecha):.0f}")
+  contador=cont,fieb,ts,ol
+#  print(contador)
+  print("===================RESULTADO MEDICO=================")
+  print("")
+  if edad<=50 and contador.count('S')==2 or contador.count('s')==2:
+    resp=contador.count('S') or contador.count('s')
+    print(f"Como Usted viene de {country} con una edad de {edad} años y ha dado {resp} respuestas positivas, se le ha clasificado como posible caso de PYAN_V19 y debe ser enviado a cuarentena")
+
+  elif edad>=50 and contador.count("S")==1 or contador.count('s')==2:
+    resp=contador.count("S") or contador.count('s')
+    print(f"Como Usted viene de {country} con una edad de {edad} años y ha dado {resp} respuestas positivas, se le ha clasificado como posible caso de PYAN_V19 y debe ser enviado a cuarentena")  
+  else:
+    print("Revisa")
+  return
+#  print(edad,cont,fecha,fieb,ts,ol)
